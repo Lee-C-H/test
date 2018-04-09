@@ -1,0 +1,35 @@
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed"
+            data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+            aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/main">게시판</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <% if(paramId){ %>
+                <li><a href="/main">메인</a></li>
+                <li><a href="/bbs">게시판</a></li>
+            <%}%>
+            
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="#" href="dropdown-toggle"
+                    data-toggle="dropdown" role="buttn" aria-haspopup="true"
+                    aria-expanded="false">접속하기<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <% if(paramId){ %>
+                        <li><a href="/process/logout">로그아웃</a></li>
+                    <% }else{%>
+                        <li><a href="/login">로그인</a></li>
+                        <li><a href="/join">회원가입</a></li>
+                    <% } %>
+                </ul>
+        </ul>
+    </div>
+</nav>
