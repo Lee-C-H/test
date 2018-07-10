@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width", initial-scale="1">
     <link rel="stylesheet" href="css/bootstrap.css">
     <title>게시판 웹사이트</title>
+    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
 </head>
 <body>
     <% include ./nav.ejs %>
@@ -23,16 +24,24 @@
                             <td><input type="text" class="form-control" id="modContentSubject" name="modbbsTitle" placeholder="제목" value="<%=content.title%>"></td>
                         </tr>
                         <tr>
-                            <td><span class="modWriter" id="modContentWriter" name="modbbsWriter" stext-align: "right">작성자 : <%=content.writer%></span></td>
+                            <td><span class="modWriter" id="modContentWriter" name="modbbsWriter" stext-align: "right">작성자 : <%-content.writer%></span></td>
                         </tr>
                         <tr>
                             <td><input type="password" class="form-control" id="modContentPassword" name="modbbsPw" placeholder="비밀번호"></td>
                         </tr>
                         <tr>
-                            <td><textarea class="form-control" placeholder="글내용" name="modbbsContent" maxlength="2048" style="height: 350px"><%=content.contents%></textarea></td>
+                            <td><textarea id="editor1" class="form-control" placeholder="글내용" name="modbbsContent" maxlength="2048" style="height: 350px"><%-content.contents%></textarea></td>
+                            <script>
+                                CKEDITOR.replace( 'editor1', {
+                                  filebrowserUploadUrl: '/upload',
+                                });      
+                            </script>
                         </tr>
                     </tbody>
                 </table>
+
+                <input type = "file" class="inputFile" id = "UploadFile" name = "UploadFile" multiple>
+                
                 <div id = "new" class="addBtngroup">
                     <input type="submit" class="btn btn-primary btn-arraw-left" value="수정">                    
                     <a href="/bbs" class="btn btn-primary btn-arraw-left"><div>취소</div></a>

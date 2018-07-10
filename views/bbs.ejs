@@ -11,6 +11,7 @@
             text-decoration: none;
         }
     </style>
+    
 </head>
 <body>
     <% include ./nav.ejs %>
@@ -26,14 +27,17 @@
                         <th style="background-color: #eeeeee; text-align: center;">작성일</th>
                         <th style="background-color: #eeeeee; text-align: center;">조회수</th>
                     </tr>
-                </thead>
-
+                </thead>            
                 
                 <tbody>                    
                     <%if(contents.length>0){%>
                         <%var i = 0;%>
                         <%contents.forEach(function(item){%>
                         <%i++;%>
+                        <%
+                            var fileCnt = '';
+                            if(item.fileUp.length != 0) fileCnt = "파일:"+item.fileUp.length;
+                        %>
                         <tr>
                             <%
                             function dateFormatChange(date) {
@@ -45,7 +49,7 @@
                             }
                             %>
                             <td class="number"><%=i%></td>
-                            <td class="title"><a href="/view?id=<%=item._id%>"><%=item.title%></a></td>
+                            <td class="title"><a href="/view?id=<%=item._id%>"><%=item.title%>  [<%=item.comments.length%>]&nbsp;&nbsp;<%=fileCnt%></a></td>
                             <td class="writer"><%=item.writer%></td>
                             <td class="date"><%=dateFormatChange(item.date)%></td>
                             <td class="cnt"><%=item.count%></td>
@@ -59,17 +63,32 @@
                 </tbody>
                 
             </table>
-
-            <div class="pagination">
-                <%
-                for(var i=1; i<=pagination; i++){
-                %>
-                    <a href="/bbs?page=<%=i%>" class="next-page"><%=i%></a>
-                <%}%>
-            </div>
+            
+            
 
             <a href="/write" class="btn btn-primary pull-right">글쓰기</a>
         </div>
+        
+        <div style="text-align: center;">
+            <ul class="pagination">
+                <% var offset = 3; %>
+                <% for (i = 1; i<=pagination; i++){ %>
+                    <% if(i<=offset || i>pagination-offset || (i>=pages-(offset-1) && i<=pages+(offset-1))) { %>
+                        <% if(i != pages) { %>
+                            <li><a href="/bbs?page=<%=i%>" class="next-page"><%=i%></a></li>
+                        <% } else { %>
+                            <li><a href="/bbs?page=<%=i%>" class="next-page"><%=i%></a></li>
+                        <% } %>
+                    <% } else if(i==offset+1 || i==pagination-offset) {%>
+                        <li>...</li>
+                    <% } %>
+                <% } %>
+            </ul>
+
+        </div>
+        
+
+        
     </div>
 	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

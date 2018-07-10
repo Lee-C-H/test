@@ -5,6 +5,37 @@
     <meta name="viewport" content="width=device-width", initial-scale="1">
     <link rel="stylesheet" href="css/bootstrap.css">
     <title>게시판 웹사이트</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script>
+        $(function(){
+            var fileUp = '<%=content.fileUp%>';
+            var files = '';
+            var cnt = '';
+            var output = '';
+            if(fileUp != "") {
+                files = fileUp.split(',');
+                cnt = files.length;
+                for (var i = 0; i < cnt; i++) {
+                    output += "<button type='button' onclick=downloadFiles('"+files[i].split(':')[0]+"');>";
+                    output += "<span id='downloadFile'>" + files[i].split(':')[1] + "</span>";
+                    output += "</button>";
+                }
+            } else {
+                output = "파일이 없습니다.";
+            }
+
+            $('.download-file').html(output);
+        });
+        
+        function downloadFiles(filepath) {
+            var path = filepath;
+            if(confirm("파일이 다운로드 됩니다.") == true) {
+                location.href = "/process/download/" + path;
+            }
+        }
+       
+    </script>
 
 </head>
 <body>
@@ -21,25 +52,83 @@
                 <tbody>
                     <tr>
                         <td style="width: 20%">글 제목</td>
-                        <td colspan="2"><%=content.title%></td>
+                        <td colspan="2"><%-content.title%></td>
                     </tr>
                     <tr>
                         <td>작성자</td>
-                        <td colspan="2"><%=content.writer%></td>
+                        <td colspan="2"><%-content.writer%></td>
                     </tr>
                     <tr>
                         <td>글 내용</td>
-                        <td colspan="2" style="min-height: 600px; text-align: left; height: 350px"><%=content.contents%></td>
+                        <td colspan="2" style="min-height: 600px; text-align: left; height: 350px"><%-content.contents%></td>
                     </tr>
                 </tbody>
             </table>
+
+            <div class="download-file"></div>
+            <br>
             <a href="/bbs" class="btn btn-primary">목록</a>
             <a href="/modify" class="btn btn-primary">수정</a>
-            <a href="/delete" class="btn btn-primary">삭제</a>       
+            <a href="/delete" class="btn btn-primary">삭제</a>
+            
         </div>
+        <br>
+        <div class="reply">
+            <div class="reply_list">
+                <%if(content.comments.length>0){%>
+                <%var commentsList = content.comments;%>
+                <%for(var i=0; i<commentsList.length; i++){%>
+                <%if(i<5){%>
+                <div class="reply_content">
+                    <table>
+                        <thead>
+                            <%
+                            function dateFormatChange(date) {
+                                var options = {
+                                    weekday: "short", year: "numeric", month: "numeric",
+                                    day: "numeric", hour: "2-digit", minute: "2-digit"
+                                };
+                                return date.toLocaleTimeString("ko-KR", options);
+                            }
+                            %>
+                            <tr>
+                                <th class="reply_info">작성자<%-commentsList[i].name%></th>
+                                <td class="date"><%=commentsList[i].date.toLocaleTimeString())%></td>
+                            </tr>
+                        </thead>
+                        
+                    </table>
+                        
+                    <div class="reply_info">작성자<%-commentsList[i].name%> </div>
+                    <div class="reply_text"><%-commentsList[i].memo%></div>
+                </div>
+                <%}%>
+                <%}%>
+                <%} else {%>
+                <div class="reply_content">
+                    <div class="reply_info">댓글이 없습니다</div>
+                </div>
+                <%}%>
+            </div>
+        </div>
+
+        <form id="replyAction" action="/reply" method="post">
+            <div class="reply_writer">
+                <input type="text" class="replyWriter" id="replyWriter" name="replyWriter" placeholder="댓글작성자">
+            </div>
+            <div class="reply_comment">
+                <textarea class="replyComment" id="replyComment" name="replyComment" rows="3" cols="30"></textarea>
+            </div>
+            <input type="hidden" name="replyId" id="replyId" value="<%=content._id%>">
+            <button type="submit">댓글 작성</button>
+        </form>
     </div>
 	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </body>
 </html>
+
+
+
+    
