@@ -15,7 +15,8 @@ db.once('open', function(){
 });
 mongoose.connect('mongodb://test:ckdghks1!@ds123490.mlab.com:23490/bbs');
 
-var server = app.listen(3000, function(){
+var port = process.env.PORT || 3000;
+app.listen(port, function(){
  console.log("Express server has started on port 3000");
 });
 
