@@ -402,7 +402,7 @@ function getDirname(num){
     // 리네임과, 파일의 경로를 따오기 위해 필요함.
     var order = num;
     var dirname = __dirname.split('/');
-    var result = '';s
+    var result = '';
     for(var i=0;i<dirname.length-order;i++){
         result += dirname[i] + '/';
     }
