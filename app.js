@@ -13,7 +13,7 @@ db.on('error', console.error);
 db.once('open', function(){
     console.log("Connected to mongod server");
 });
-mongoose.connect('mongodb://localhost:27017/bbs');
+mongoose.connect('mongodb://test:ckdghks1!@ds123490.mlab.com:23490/bbs');
 
 var server = app.listen(3000, function(){
  console.log("Express server has started on port 3000");
