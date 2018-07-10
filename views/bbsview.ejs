@@ -73,37 +73,38 @@
             
         </div>
         <br>
+        <h2><strong>댓글</strong></h2>
+        <hr>
         <div class="reply">
             <div class="reply_list">
                 <%if(content.comments.length>0){%>
                 <%var commentsList = content.comments;%>
-                <%for(var i=0; i<commentsList.length; i++){%>
-                <%if(i<5){%>
-                <div class="reply_content">
-                    <table>
-                        <thead>
-                            <%
-                            function dateFormatChange(date) {
-                                var options = {
-                                    weekday: "short", year: "numeric", month: "numeric",
-                                    day: "numeric", hour: "2-digit", minute: "2-digit"
-                                };
-                                return date.toLocaleTimeString("ko-KR", options);
-                            }
-                            %>
-                            <tr>
-                                <th class="reply_info">작성자<%-commentsList[i].name%></th>
-                                <td class="date"><%=commentsList[i].date.toLocaleTimeString())%></td>
-                            </tr>
-                        </thead>
-                        
-                    </table>
-                        
-                    <div class="reply_info">작성자<%-commentsList[i].name%> </div>
-                    <div class="reply_text"><%-commentsList[i].memo%></div>
-                </div>
-                <%}%>
-                <%}%>
+                    <%for(var i=0; i<commentsList.length; i++){%>
+                        <%if(i<5){%>
+                        <div class="reply_content">d
+                            <table>
+                                
+                                <thead>
+                                    <% function dateFormatChange(date) {
+                                        var options = {
+                                            weekday: "short", year: "numeric", month: "numeric",
+                                            day: "numeric", hour: "2-digit", minute: "2-digit"
+                                        };
+                                        return date.toLocaleTimeString('ko-KR', options);
+                                    } %>
+                                    <tr>
+                                        <th class="reply_info"><%-commentsList[i].name%></th>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="reply_text"><%-commentsList[i].memo%></td>
+                                    </tr>
+                                    <hr>
+                                </thead>                        
+                            </table>
+                        </div>
+                        <%}%>
+                    <%}%>
                 <%} else {%>
                 <div class="reply_content">
                     <div class="reply_info">댓글이 없습니다</div>
@@ -111,7 +112,8 @@
                 <%}%>
             </div>
         </div>
-
+        <hr>
+        <br>
         <form id="replyAction" action="/reply" method="post">
             <div class="reply_writer">
                 <input type="text" class="replyWriter" id="replyWriter" name="replyWriter" placeholder="댓글작성자">
@@ -123,12 +125,9 @@
             <button type="submit">댓글 작성</button>
         </form>
     </div>
+    <br><br><br>
 	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </body>
 </html>
-
-
-
-    
