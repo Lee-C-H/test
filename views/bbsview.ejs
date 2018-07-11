@@ -80,7 +80,7 @@
                 <%if(content.comments.length>0){%>
                 <%var commentsList = content.comments;%>
                     <%for(var i=0; i<commentsList.length; i++){%>
-                        <%if(i<5){%>
+                        
                         <div class="reply_content">
                             <table>
                                 
@@ -103,7 +103,7 @@
                                 </thead>                        
                             </table>
                         </div>
-                        <%}%>
+                        
                     <%}%>
                 <%} else {%>
                 <div class="reply_content">
@@ -119,10 +119,10 @@
                 <input type="text" class="replyWriter" id="replyWriter" name="replyWriter" placeholder="댓글작성자">
             </div>
             <div class="reply_comment">
-                <textarea class="replyComment" id="replyComment" name="replyComment" rows="3" cols="30"></textarea>
+                <textarea class="replyComment" id="replyComment" name="replyComment" rows="5" cols="140" placeholder="댓글내용"></textarea>
+                <input type="hidden" name="replyId" id="replyId" value="<%=content._id%>">
+                <button type="submit">댓글 작성</button>
             </div>
-            <input type="hidden" name="replyId" id="replyId" value="<%=content._id%>">
-            <button type="submit">댓글 작성</button>
         </form>
     </div>
     <br><br><br>

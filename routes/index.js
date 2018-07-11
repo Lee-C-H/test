@@ -76,8 +76,14 @@ module.exports = function(router)
         console.log(path);
     });
 
+    router.get('/bbsview', function(req, res) {
+        var sess = req.session;     
+        res.render('bbsview', {content: sess.bbs1, paramId: sess.paramId});
+    });
+
     router.post('/reply', function(req, res){
         // 댓글 다는 부분
+        
         var reply_writer = req.body.replyWriter;
         var reply_comment = req.body.replyComment;
         var reply_id = req.body.replyId;
@@ -92,9 +98,11 @@ module.exports = function(router)
             rawContent.save(function(err){
                 if(err) throw err;
             });
+
+            res.redirect('/bbsview?id='+id);
         });
-    
-        res.redirect('/bbsview?id='+reply_id);
+        
+
     });
 
     router.get('/write', function(req, res) {
@@ -104,11 +112,6 @@ module.exports = function(router)
             if(err) throw err;
             res.render('write', {contents: rawContents,paramId: sess.paramId});
         });
-    });
-
-    router.get('/bbsview', function(req, res) {
-        var sess = req.session;     
-        res.render('bbsview', {content: sess.bbs1, paramId: sess.paramId});
     });
 
     router.get('/modify', function(req, res) {
